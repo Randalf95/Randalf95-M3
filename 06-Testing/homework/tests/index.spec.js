@@ -16,7 +16,7 @@ describe('Test de APIS', () => {
     it('responds with 200', () => agent.get('/test').expect(200));
     it('responds with and object with message `test`', () =>
       agent.get('/test').then((res) => {
-        expect(res.body.message).toEqual('hola');
+        expect(res.body.message).toEqual('test');
       }));
   });
 
@@ -29,9 +29,16 @@ describe('Test de APIS', () => {
           expect(res.body.result).toEqual(5);
         })
     );
+    it('responds with the sum of 5 and 3', () =>
+      agent.post('/sum')
+        .send({a: 5, b: 3})
+        .then((res) => {
+          expect(res.body.result).toEqual(8);
+        })
+    );
   });
 
-  describe('POST /producto', () => {
+  describe('POST /product', () => {
     it('responds with 200', () => agent.post('/product').expect(200));
     it('responds with the product of 2 and 3', () =>
       agent.post('/product')
@@ -40,11 +47,18 @@ describe('Test de APIS', () => {
           expect(res.body.result).toEqual(6);
         })
     );
+    it('responds with the product of 2 and 3', () =>
+      agent.post('/product')
+        .send({a: 2, b: 4})
+        .then((res) => {
+          expect(res.body.result).toEqual(8);
+        })
+    );
   });
 
   describe('POST /sumArray', () => {
     it('responds with 200', () => agent.get('/test').expect(200));
-    it('responds with and object with message `test`', () =>
+    it('devuelve true si la suma de dos elementos del array es igual al parametro num. Devuelve false en caso contrario', () =>
       agent.post('/sumArray')
         .send({array: [2,5,7,10,11,15,20], num: 13})
         .then((res) => {
